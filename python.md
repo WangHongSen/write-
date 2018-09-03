@@ -77,7 +77,7 @@
 - func(positional_args,keyword_args,*tuple_grp_nonkw_args,**dict_grp_kw_args)
 - 内部/内嵌函数，在函数体内创建的另外一个函数对象。若无对内部函数的外部应用，则除了函数内，任何地方不能对其进行调用
 - @decorate(arguments) def func(): 装饰器，允许多重。带参数表示以该装是器返回绘制作为新的装饰器。装饰器装饰一个callable对象，返回一个callable对象
-- 默认参数，同c++
+- 默认参数，同c++,必须指向不可变对象，如None，str
 -lambda表达式，变量=lambda 变量列表（可以是*开头的列表和**开头的字典）: 表达式
 - filter(过滤器（返回布尔值的函数），序列)，map(函数，多个序列参数),reduce(func,seq)(python3不是全局函数，需要引用functools包)
 - global，局部作用域（函数）引用全局变量，用法gloabal，var[,var,,,],用后局部作用域不能声明同名变量
