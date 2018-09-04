@@ -101,3 +101,20 @@
 - from …… import ……[as] 导入指定的模块属性（限制使用from module import *,旨在目标模块中属性太多，反复键入木块名不方便和交互解释器下使用）
 - 一个模块只加载（load）一次，无论导入（import）了多少次
 -  __import__(module_name[,globals[,locals[,fromlist[,level]]]]),只有第一个参数时返回module类示例，globals()返回调用者全局名称空间的字典，locals()返回局部名称空间的字典
+
+# 高阶函数
+- map(function,list),对列表每个元素进行操作，返回一个列表。列表可是任意iterable对象
+- reduce(function,list),把function迭代运用在列表上，返回一个值，从functools中导入
+- filter(func,list),func是一个返回布尔值的函数，将func应用到list上，根据返回值过滤
+- sorted(list,key=,reverse=),key是一个排序用的函数，数字、字符串可不用传入。reverse=True反向排序
+- 对于闭包：返回函数的时候不能引用任何循环变量、任何后续会发生变化的变量。
+- 装饰器，实质是用函数封装，将要装饰的函数传入装饰器函数，由装饰器提供参数，在执行了了装饰语句后，将参数传入并返回函数。实质是decorator((func).装饰器如果要传入参数，则定义装饰器的时候要使用三层封装。实质是decorator(arg)(func)。装饰过程中可使用functools.wraps工具将原始函数的__name__函数复制到wrapper函数中。示例:
+```import functools
+ def log(text):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kw):
+            print('%s %s():' % (text, func.__name__))
+            return func(*args, **kw)
+        return wrapper
+    return decorator```
