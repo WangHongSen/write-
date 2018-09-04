@@ -1,4 +1,4 @@
-
+[TOC]
 
 # 语法基础
 
@@ -101,6 +101,7 @@
 - from …… import ……[as] 导入指定的模块属性（限制使用from module import *,旨在目标模块中属性太多，反复键入木块名不方便和交互解释器下使用）
 - 一个模块只加载（load）一次，无论导入（import）了多少次
 -  __import__(module_name[,globals[,locals[,fromlist[,level]]]]),只有第一个参数时返回module类示例，globals()返回调用者全局名称空间的字典，locals()返回局部名称空间的字典
+- 使用_name的方式将变量设为私有
 
 # 高阶函数
 - map(function,list),对列表每个元素进行操作，返回一个列表。列表可是任意iterable对象
@@ -109,12 +110,27 @@
 - sorted(list,key=,reverse=),key是一个排序用的函数，数字、字符串可不用传入。reverse=True反向排序
 - 对于闭包：返回函数的时候不能引用任何循环变量、任何后续会发生变化的变量。
 - 装饰器，实质是用函数封装，将要装饰的函数传入装饰器函数，由装饰器提供参数，在执行了了装饰语句后，将参数传入并返回函数。实质是decorator((func).装饰器如果要传入参数，则定义装饰器的时候要使用三层封装。实质是decorator(arg)(func)。装饰过程中可使用functools.wraps工具将原始函数的__name__函数复制到wrapper函数中。示例:
-```import functools
- def log(text):
-    def decorator(func):
-        @functools.wraps(func)
+```
+import functools
+def log(text):
+   def decorator(func):
+       @functools.wraps(func)
         def wrapper(*args, **kw):
             print('%s %s():' % (text, func.__name__))
             return func(*args, **kw)
         return wrapper
-    return decorator```
+    return decorator
+```
+- 偏函数。固定函数参数，例如`int2 = functools.partial(int, base=2)`，固定int的base参数为2，
+
+# 面向对象
+-  使用class定义类，是一个抽象模板，()实现继承，
+- __init__实现构造器功能，对象所有方法必须传入self参数，
+- 使用两个下划线__隐藏变量,函数，实现private.前后双下划线约定不可访问。通过设置getter、setter方法获取隐藏变量，或者通过_classname__attributename访问
+- hasattr(),getattr(),setattr()等内置方法可以操纵对象属性
+- 通过self绑定实例变量，通过类定义直接定义初始化类变量，类变量被所有实例共享
+- 用__slots__限制添加位置参数
+- 使用@property将函数func转变为属性，如进一步使用@func.setter装饰setter则该属性是可读写，否则只可读
+- __str __ ,__repr__定义函数的tostring方法，__repr__为调试服务。__iter __，__next __,使对象可以变量可迭代，StopIteration()方法停止迭代。__getitem __方法实现下标，可实现切片.__getattr __实现添加备用属性，调用某某属性失败时使用该函数。 __call __使实例可调用
+- 枚举类，Enum,默认从零开始技术，使用Enum.__members __items()返回可迭代对象
+- 使用type(name ,(parent,),dict)创建名为name的新类，parent是要继承的父类，dict是要绑定的函数字典
