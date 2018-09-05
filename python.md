@@ -134,3 +134,15 @@ def log(text):
 - __str __ ,__repr__定义函数的tostring方法，__repr__为调试服务。__iter __，__next __,使对象可以变量可迭代，StopIteration()方法停止迭代。__getitem __方法实现下标，可实现切片.__getattr __实现添加备用属性，调用某某属性失败时使用该函数。 __call __使实例可调用
 - 枚举类，Enum,默认从零开始技术，使用Enum.__members __items()返回可迭代对象
 - 使用type(name ,(parent,),dict)创建名为name的新类，parent是要继承的父类，dict是要绑定的函数字典
+
+# 调试
+- 使用assert condition，message，condition不满足产生assertError
+- 使用logging模块
+- 使用python -m pdb file 进入pdb调试，在文件中加入pdb.set_trace()方法设置断点
+- 单元测试，使用unittest模块，自定义的测试类要继承unittest.TestCase类，以test开头的为测试方法，常用判断方法asserEqual，assertRaise，setUp，tearDown方法实现测试前后的预处理和扫尾工作。
+
+# IO
+- with as,自动关闭资源
+- file_like对象，实现了read方法
+- open方法中，模式为wrb组合，encoding指定编码方式，errors指定编码错误时的处理方式
+- StringIO，ByteIO在内存中读写，
