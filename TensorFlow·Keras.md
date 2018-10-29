@@ -159,3 +159,27 @@ model.compile(optimizer=tf.train.RMSPropOptimizer(0.001),
 # Trains for 5 epochs.
 model.fit(data, targets, batch_size=32, epochs=5)
 ```
+
+### 权重
+默认使用checkpoint文件格式保存，keras HDF5格式是keras multi-backend的默认实现)
+save_weight(path,save_format='h5') 
+相同架构才能恢复权重
+load_weight(path)
+模型的序列化（不包含weight）：JSON YAML
+model.to_json()
+keras.models.model_from_json()
+
+### estimators API
+用于在分布式环境下训练模型
+```
+model = keras.Sequential([layers.Dense(10,activation='softmax'),
+                          layers.Dense(10,activation='softmax')])
+
+model.compile(optimizer=tf.train.RMSPropOptimizer(0.001),
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+estimator = keras.estimator.model_to_estimator(model)
+```
+keras通过tf.contrib.distributionStrategy实现多GPU支持，只实现了tf.contrib.distribute.MirroredStrategy
+如果需要使用distributionStrategy，要通过tf.keras.estimator.model_to_estimator将tf.keras.Model转换成tf.estimatoe.Estimatoe
